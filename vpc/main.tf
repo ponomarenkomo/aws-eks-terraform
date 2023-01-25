@@ -29,6 +29,12 @@ module "vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
+
+  public_subnet_tags = {
+    Type                                = "Public Subnets"
+    "kubernetes.io/role/elb"            = 1
+    "kubernetes.io/cluster/eks-cluster" = "shared"
+  }
 }
 
 data "aws_availability_zones" "available" {
