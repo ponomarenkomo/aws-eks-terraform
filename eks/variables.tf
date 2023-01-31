@@ -22,3 +22,15 @@ variable "cluster_version" {
 
 
 }
+
+variable "eks_oidc_root_ca_thumbprint" {
+  description = "Thumbprint of Root CA for EKS OIDC, Valid until 2037"
+  type        = string
+  default     = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
+}
+
+variable "hosted_zone" {
+  default = "alpacked.click"
+  type    = string
+
+}

@@ -27,28 +27,33 @@ provider "github" {
 }
 
 locals {
-  hosted_zone = "kubxr.com"
   argocd = {
-    gitlab_private_repo_name = "bakavets/k8s-demo"
-    version                  = "5.4.0"
-    namespace                = "argocd"
+    github_public_repo_name = "ponomarenkomo/aws-eks-terraform"
+    version                 = "5.4.0"
+    namespace               = "argocd"
   }
+}
+
+variable "hosted_zone" {
+  default = null
+  type    = string
+
 }
 
 resource "helm_release" "argocd" {
   name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
+  repository       = "https://argoproj.github.io/argo-helm/"
   chart            = "argo-cd"
   version          = local.argocd.version
   namespace        = local.argocd.namespace
   create_namespace = true
 
-  #   values = [
-  # templatefile("${path.module}/templates/values.yaml", {
-  #   k8s_ssh_private_key = tls_private_key.ed25519_argocd.private_key_openssh,
-  #   k8s_repo            = local.argocd.gitlab_private_repo_name,
-  #   host                = local.hosted_zone
-  # })
-  #   ]
+
+  values = [
+    templatefile("../templates/values.yaml", {
+      k8s_repo = local.argocd.github_public_repo_name,
+      host     = var.hosted_zone
+    })
+  ]
 
 }
