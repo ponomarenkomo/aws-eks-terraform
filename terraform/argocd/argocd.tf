@@ -15,8 +15,6 @@ resource "helm_release" "argocd" {
   namespace        = local.argocd.namespace
   create_namespace = true
 
-
-  # k8s_repo = local.argocd.github_public_repo_name,
   values = [
     templatefile("${path.module}/templates/values.yaml", {
       k8s_repo = local.argocd.github_public_repo_name
@@ -33,7 +31,7 @@ resource "tls_private_key" "ed25519_argocd" {
 
 resource "github_repository_deploy_key" "argocd-deploy-key" {
   title      = "ArgoCD Deploy key for deployment"
-  repository = local.argocd.github_public_repo_name
+  repository = "../${local.argocd.github_public_repo_name}"
   key        = tls_private_key.ed25519_argocd.public_key_openssh
 }
 
@@ -77,6 +75,6 @@ resource "kubectl_manifest" "initial_bootstrap" {
 
   depends_on = [
     helm_release.argocd,
-    # github_repository_deploy_key.argocd-deploy-key
+    github_repository_deploy_key.argocd-deploy-key
   ]
 }
