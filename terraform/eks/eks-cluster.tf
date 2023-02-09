@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = "eks-cluster"
+  name     = var.cluster_name
   version  = var.cluster_version
   role_arn = aws_iam_role.eks_master_role.arn
   vpc_config {
@@ -12,7 +12,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   }
 
   # Enable EKS Cluster Control Plane Logging
-  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  enabled_cluster_log_types = ["api"]
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.

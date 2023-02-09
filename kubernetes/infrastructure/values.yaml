@@ -1,0 +1,21 @@
+spec:
+  destination:
+    server:
+cert-manager:
+  enabled: false
+  namespace: cert-manager
+  serviceAccountName: cert-manager
+  version: v1.9.0
+  eksRoleArn: arn:aws:iam::123456789123:role/role-name
+
+  certManagerConfigs:
+    enabled: false
+    repoURL: git@gitlab.com:example/example.git
+    version: main
+    path: k8s/infrastructure/charts/cert-manager-configs
+    acme:
+      email: example@example.com
+      dnsZones:
+        - example.com
+      route53:
+        hostedZoneID: Z123456789EXAMPLE

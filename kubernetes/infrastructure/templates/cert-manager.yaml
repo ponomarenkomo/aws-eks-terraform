@@ -1,0 +1,32 @@
+{{- if .Values.cert-manager.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: infrastructure
+  source:
+    repoURL: https://charts.jetstack.io
+    targetRevision: {{ .Values.cert-manager.version }}
+    chart: cert-manager
+    helm:
+      values: |
+        serviceAccount:
+          create: true 
+          name: {{ .Values.cert-manager.serviceAccountName }}
+          annotations: 
+            eks.amazonaws.com/role-arn: {{ .Values.cert-manager.eksRoleArn }}
+        installCRDs: true
+        
+  destination:
+    server: {{ .Values.spec.destination.server}}
+    namespace: {{ .Values.cert-manager.namespace}}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+{{- end }}
