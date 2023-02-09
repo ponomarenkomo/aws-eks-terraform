@@ -24,6 +24,7 @@ spec:
           route53:
             region: {{ .Values.aws.region }}
             hostedZoneID: {{ .Values.certManagerConfigs.acme.route53.hostedZoneID }}
+
   destination:
     server: {{ .Values.spec.destination.server }}
 

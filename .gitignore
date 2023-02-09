@@ -23,3 +23,4 @@ override.tf.json
 
 # Ignored vscode files
 .vscode/
+.DS_Store

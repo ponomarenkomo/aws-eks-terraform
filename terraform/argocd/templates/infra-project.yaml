@@ -16,26 +16,33 @@ spec:
           route53:
             dnsZone: ${aws_route53_dnsZone}
             hostedZoneID: ${aws_route53_hostedZoneID}
+
         clusterName: ${clusterName}
+
         source:
           repoURL: ${source_repoURL}
           targetRevision: ${source_targetRevision}
+
         bootstrapApp:
           certManager:
             serviceAccountName: ${bootstrapApp_certManager_serviceAccountName}
             serviceAccountNamespace: ${bootstrapApp_certManager_serviceAccountNamespace}
             eksRoleArn: ${bootstrapApp_certManager_eksRoleArn}
+
           certManagerConfigs:
             acme:
               email: ${bootstrapApp_certManagerConfigs_acme_email}
+
           awsLBController:
             serviceAccountName: ${bootstrapApp_awsLBController_serviceAccountName}
             namespace: ${bootstrapApp_awsLBController_namespace}
             eksRoleArn: ${bootstrapApp_awsLBController_eksRoleArn}
+
           externalDNS:
             serviceAccountName: ${bootstrapApp_externalDNS_serviceAccountName}
             namespace: ${bootstrapApp_externalDNS_namespace}
             eksRoleArn: ${bootstrapApp_externalDNS_eksRoleArn}
+
   destination:
     namespace: ${namespace}
     server: https://kubernetes.default.svc
