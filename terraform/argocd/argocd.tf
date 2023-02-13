@@ -17,8 +17,9 @@ resource "helm_release" "argocd" {
 
   values = [
     templatefile("${path.module}/templates/values.yaml", {
-      k8s_repo = local.argocd.github_public_repo_name
-      host     = var.hosted_zone
+      k8s_ssh_private_key = tls_private_key.ed25519_argocd.private_key_openssh,
+      k8s_repo            = local.argocd.github_public_repo_name
+      host                = var.hosted_zone
     })
   ]
 }

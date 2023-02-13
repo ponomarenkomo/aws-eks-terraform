@@ -7,7 +7,7 @@ variable "token" {
 }
 
 variable "hosted_zone" {
-  default = "alpacked.click"
+  default = "nipo.in.net"
   type    = string
 
 }

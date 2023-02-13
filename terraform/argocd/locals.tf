@@ -6,7 +6,7 @@ locals {
   }
 
   initial_bootstrap = {
-    path           = "k8s/infrastructure/templates/"
+    path           = "k8s/infrastructure/applications/"
     repoURL        = "git@github.com:${local.argocd.github_public_repo_name}.git",
     targetRevision = "main",
     acme_email     = "ponomarenko.n.2001@gmail.com"
