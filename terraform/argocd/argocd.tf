@@ -67,7 +67,7 @@ resource "kubectl_manifest" "initial_bootstrap" {
 
     bootstrapApp_awsLBController_serviceAccountName = local.aws_load_balancer_controller.name,
     bootstrapApp_awsLBController_namespace          = local.aws_load_balancer_controller.namespace,
-    bootstrapApp_awsLBController_eksRoleArn         = module.irsa_lb_role.iam_role_arn,
+    bootstrapApp_awsLBController_eksRoleArn         = module.irsa_aws_load_balancer_controller.iam_role_arn,
 
     bootstrapApp_externalDNS_serviceAccountName = local.external_dns.name,
     bootstrapApp_externalDNS_namespace          = local.external_dns.namespace,
