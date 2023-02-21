@@ -1,3 +1,11 @@
+locals {
+  node_group_policy = [
+    "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  ]
+}
+
 resource "aws_iam_role" "eks_nodegroup_role" {
   name = "eks-nodegroup-role"
 
@@ -14,16 +22,8 @@ resource "aws_iam_role" "eks_nodegroup_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks-AmazonEKSWorkerNodePolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  for_each   = toset(local.node_group_policy)
   role       = aws_iam_role.eks_nodegroup_role.name
+  policy_arn = each.value
 }
 
-resource "aws_iam_role_policy_attachment" "eks-AmazonEKS_CNI_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eks_nodegroup_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "eks-AmazonEC2ContainerRegistryReadOnly" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks_nodegroup_role.name
-}
