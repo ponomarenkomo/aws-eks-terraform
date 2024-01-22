@@ -4,13 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'vpc/**'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'vpc/**'
 
 jobs:
   terraform:
@@ -52,7 +45,6 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'pull_request'
         run: terraform plan -no-color
         continue-on-error: true
 
